@@ -1,0 +1,191 @@
+$ mcdgit init --store 1990696 --name 麦当劳南京青岛路餐厅
+Initialized empty mcdgit repository in ~/麦门\.mcdgit
+
+remote origin    麦当劳南京青岛路餐厅 (到店自取)
+storeCode        1990696
+orderType        1
+beType           1 (到店自取)
+
+  下一步：mcdgit fetch    # 拉菜单
+
+$ mcdgit fetch
+从 麦当劳南京青岛路餐厅 (到店自取) 拉取远端...
+远端更新  麦当劳南京青岛路餐厅 (到店自取)
+在售餐品         3
+最便宜           中薯条 ¥14.50
+
+
+$ mcdgit add 巨无霸 --mod 吉士=2
+✓ 已暂存 巨无霸 ×1  ¥26.00 菜单价  [特调 ×2]
+    - 洋葱粒  ← .mcdgitignore
+
+$ mcdgit add 中薯条
+✓ 已暂存 中薯条 ×1  ¥14.50 菜单价
+
+$ mcdgit diff
+diff --mcdgit a/巨无霸 b/巨无霸
+--- a/巨无霸
++++ b/巨无霸
+@@ 巨无霸 特调 @@
++  吉士 1 -> 2
+-  洋葱粒 1 -> 0   ← .mcdgitignore
+  ×1 → ¥26.00
+
+diff --mcdgit a/中薯条 b/中薯条
+--- a/中薯条
++++ b/中薯条
+  (无特调改动)
+  ×1 → ¥14.50
+
+──────────────────────────────────────────────────────────────
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+ 合计 ¥40.50
+
+$ mcdgit commit -m "feat: 下午续命"
+正在向 麦当劳南京青岛路餐厅 (到店自取) 提交订单...
+
+[main 1030101] feat: 下午续命
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+   + 巨无霸  ¥26.00
+       + 吉士 1 -> 2
+       - 洋葱粒 1 -> 0  ← .mcdgitignore
+   + 中薯条  ¥14.50
+
+订单号           10301018270000795607354880945   ← 就是上面那个 hash
+合计             ¥40.50
+
+  订单已创建，但**还没付钱**。 `mcdgit push` 去支付。
+
+
+$ mcdgit add 巨无霸 --mod 洋葱粒=1
+✓ 已暂存 巨无霸 ×1  ¥26.00 菜单价
+
+$ mcdgit commit -m "feat: 试一口洋葱"
+正在向 麦当劳南京青岛路餐厅 (到店自取) 提交订单...
+
+[main 1030102] feat: 试一口洋葱
+ 1 file changed, 1 insertion(+), 0 deletions(-)
+   + 巨无霸  ¥26.00
+
+订单号           10301028270000795607354880945   ← 就是上面那个 hash
+合计             ¥26.00
+
+  订单已创建，但**还没付钱**。 `mcdgit push` 去支付。
+
+$ mcdgit add 巨无霸
+✓ 已暂存 巨无霸 ×1  ¥26.00 菜单价  [特调 ×1]
+    - 洋葱粒  ← .mcdgitignore
+
+$ mcdgit commit -m "fix: 戒洋葱"
+正在向 麦当劳南京青岛路餐厅 (到店自取) 提交订单...
+
+[main 1030103] fix: 戒洋葱
+ 1 file changed, 0 insertions(+), 1 deletion(-)
+   + 巨无霸  ¥26.00
+       - 洋葱粒 1 -> 0  ← .mcdgitignore
+
+订单号           10301038270000795607354880945   ← 就是上面那个 hash
+合计             ¥26.00
+
+  订单已创建，但**还没付钱**。 `mcdgit push` 去支付。
+
+$ mcdgit add 巨无霸 --mod 洋葱粒=1
+✓ 已暂存 巨无霸 ×1  ¥26.00 菜单价
+
+$ mcdgit commit -m "feat: 复吸"
+正在向 麦当劳南京青岛路餐厅 (到店自取) 提交订单...
+
+[main 1030104] feat: 复吸
+ 1 file changed, 1 insertion(+), 0 deletions(-)
+   + 巨无霸  ¥26.00
+
+订单号           10301048270000795607354880945   ← 就是上面那个 hash
+合计             ¥26.00
+
+  订单已创建，但**还没付钱**。 `mcdgit push` 去支付。
+
+
+$ mcdgit blame 洋葱粒
+blame: 洋葱粒
+扫描 4 次提交
+
++ 1030102  10-10 16:58  引入 洋葱粒   「feat: 试一口洋葱」
+- 1030103  10-10 16:58  移除 洋葱粒   「fix: 戒洋葱」
++ 1030104  10-10 16:58  加回 洋葱粒   「feat: 复吸」
+
+  ← 上次你明明删掉了，这次又是为什么？
+
+
+$ mcdgit branch alice
+✓ 已创建分支 alice
+  换个口味？`mcdgit checkout alice`
+
+$ mcdgit checkout alice
+Switched to branch 'alice'
+
+$ mcdgit add 麦辣鸡腿堡
+✓ 已暂存 麦辣鸡腿堡 ×1  ¥24.00 菜单价
+
+$ mcdgit commit -m "feat(alice): 这个鸡腿堡是我的"
+正在向 麦当劳南京青岛路餐厅 (到店自取) 提交订单...
+
+[alice 1030105] feat(alice): 这个鸡腿堡是我的
+ 1 file changed, 1 insertion(+), 0 deletions(-)
+   + 麦辣鸡腿堡  ¥24.00
+
+订单号           10301058270000795607354880945   ← 就是上面那个 hash
+合计             ¥24.00
+
+  订单已创建，但**还没付钱**。 `mcdgit push` 去支付。
+
+$ mcdgit checkout main
+Switched to branch 'main'
+
+$ mcdgit add 麦辣鸡腿堡
+✓ 已暂存 麦辣鸡腿堡 ×1  ¥24.00 菜单价
+
+$ mcdgit commit -m "feat(bob): 这个鸡腿堡也是我的"
+正在向 麦当劳南京青岛路餐厅 (到店自取) 提交订单...
+
+[main 1030106] feat(bob): 这个鸡腿堡也是我的
+ 1 file changed, 1 insertion(+), 0 deletions(-)
+   + 麦辣鸡腿堡  ¥24.00
+
+订单号           10301068270000795607354880945   ← 就是上面那个 hash
+合计             ¥24.00
+
+  订单已创建，但**还没付钱**。 `mcdgit push` 去支付。
+
+
+$ mcdgit merge alice
+fatal: CONFLICT (content): Merge conflict in 麦辣鸡腿堡
+
+        alice: 我要
+        bob: 我要
+
+        解决：--strategy ours（我点的） / --strategy theirs（他点的） / --strategy union（都点上）
+
+
+$ mcdgit merge alice --strategy union
+⚠ 当前远端的 beType=1（到店自取），不是团餐(6)。
+  合并出来的结果会被放进暂存区，但下单走的仍是当前门店类型。
+[main 1030107] merge: main ← alice
+ 1 file changed, 1 insertion(+), 0 deletions(-)
+   + 麦辣鸡腿堡  ¥48.00
+
+订单号           10301078270000795607354880945   ← 就是上面那个 hash
+合计             ¥48.00
+
+  merge commit 有两个 parent：1030106 和 1030105
+
+
+$ mcdgit log --graph --oneline
+* 1030107 (HEAD -> main) (merge) merge: main ← alice
+* | 1030106 feat(bob): 这个鸡腿堡也是我的
+| * 1030105 feat(alice): 这个鸡腿堡是我的
+|/
+* 1030104 feat: 复吸
+* 1030103 fix: 戒洋葱
+* 1030102 feat: 试一口洋葱
+* 1030101 feat: 下午续命
+

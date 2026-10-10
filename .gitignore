@@ -1,0 +1,19 @@
+# 凭证 —— 严禁提交
+.env
+.env.*
+*.token
+mcp-config.json
+
+# 依赖
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# 产物
+.mcdgit/
+dist/
+build/
+output/
+*.log
+.DS_Store
